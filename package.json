@@ -1,0 +1,27 @@
+{
+  "name": "auth_tutorial",
+  "version": "1.0.0",
+  "description": "passportjs tutorial",
+  "main": "index.js",
+  "scripts": {
+    "test": "run app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dielawn/auth_tutorial.git"
+  },
+  "author": "dielawn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dielawn/auth_tutorial/issues"
+  },
+  "homepage": "https://github.com/dielawn/auth_tutorial#readme",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "mongoose": "^8.3.3",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0"
+  }
+}
