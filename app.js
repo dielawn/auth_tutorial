@@ -44,5 +44,22 @@ app.post('/sign-up', async (req, res, next) => {
     };
 });
 
-app.listen(3000, () => console.log('app listening on port 3000!'));
+passport.use(
+    new LocalStrategy(async (username, password, done) => {
+        try {
+            const user = await User.findOne({ username: username });
+            if (!user) {
+                return done(null, false, { message: 'Incorrect username' });
+            };
+            if (user.password !== password) {
+                return done(null, false, { message: 'Incorrect password' });
+            };
+            return done(null, user);
+        } catch(err) {
+            return done(err);
+        };
+    })
+);
+
+app.listen(3000, () => console.log('app listening on port 3000! http://localhost:3000/'));
 
