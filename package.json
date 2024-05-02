@@ -4,8 +4,7 @@
   "description": "passportjs tutorial",
   "main": "index.js",
   "scripts": {
-    "test": "start",
-    "start": "node app.js"
+    "test": "start"
   },
   "repository": {
     "type": "git",
