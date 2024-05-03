@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/dielawn/auth_tutorial#readme",
   "dependencies": {
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "express-session": "^1.18.0",
