@@ -28,16 +28,20 @@ app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 
-app.get("/", (req, res) => res.render("index"));
+app.get("/", (req, res) => {
+    res.render("index", { user: req.user });
+});
 
-app.get('/sign-up', (req,res) => res.render('sign-up-form'));
+app.get('/sign-up', (req,res) => {
+    res.render('sign-up-form', { user: req.user })
+});
 app.post('/sign-up', async (req, res, next) => {
     try {
         const user = new User({
             username: req.body.username,
             password: req.body.password,
         });
-        const result = await user.save();
+        await user.save();
         res.redirect('/');
     } catch(err) {
         return next(err);
@@ -60,6 +64,36 @@ passport.use(
         };
     })
 );
+
+passport.serializeUser((user, done) => {
+    done(null, user.id)
+});
+
+passport.deserializeUser(async (id, done) => {
+    try {
+        const user = await User.findById(id);
+        done(null, user);
+    } catch(err) {
+        done(err);
+    };
+});
+
+app.post(
+    '/log-in',
+    passport.authenticate('local', {
+        successRedirect: '/',
+        failureRedirect: '/'
+    })
+);
+
+app.get('/log-out', (req, res, next) => {
+    req.logout((err) => {
+        if (err) {
+            return next(err);
+        }
+        res.redirect('/');
+    });
+});
 
 app.listen(3000, () => console.log('app listening on port 3000! http://localhost:3000/'));
 
