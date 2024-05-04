@@ -25,7 +25,20 @@ const app = express();
 app.set("views", __dirname);
 app.set("view engine", "ejs");
 
-app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
+const sessionStore = new MongoStore({
+    mongooseConnection: connection,
+    collection: 'sessions'
+});
+
+app.use(session({ 
+    secret: "cats", 
+    resave: false, 
+    saveUninitialized: true,
+    store: sessionStore,
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24 // 1 day
+    }
+}));
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 
